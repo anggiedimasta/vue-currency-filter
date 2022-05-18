@@ -107,9 +107,9 @@ export const unformat = function (value, decimal?) {
 export const toFixed = function (value, precision) {
   precision = checkPrecision(precision, lib.settings.number.precision)
 
-  const exponentialForm = Number(unformat(value) + 'e' + precision)
+  const rounded = Number(value.toString().match(/^\d+(?:\.\d{0,2})?/))
+  const finalResult = String(rounded)
 
-  const finalResult = String(Math.floor(Number(exponentialForm + 'e-' + precision) * 100) / 100)
   return finalResult
 }
 

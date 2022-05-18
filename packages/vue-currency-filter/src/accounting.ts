@@ -8,21 +8,21 @@ const lib = {
       decimal: '.', // decimal point separator
       thousand: ',', // thousands separator
       precision: 2, // decimal places
-      grouping: 3 // digit grouping (not implemented yet)
+      grouping: 3, // digit grouping (not implemented yet)
     },
     number: {
       precision: 0, // default precision on numbers is 0
       grouping: 3, // digit grouping (not implemented yet)
       thousand: ',',
-      decimal: '.'
-    }
-  }
+      decimal: '.',
+    },
+  },
 }
 
 /**
  * Check and normalise the value of precision (must be positive integer)
  */
-export function checkPrecision (val, base = 0) {
+export function checkPrecision(val, base = 0) {
   val = Math.abs(val)
   return isNaN(val) ? base : val
 }
@@ -36,7 +36,7 @@ export function checkPrecision (val, base = 0) {
  *
  * Either string or format.pos must contain "%v" (value) to be valid
  */
-export function checkCurrencyFormat (format) {
+export function checkCurrencyFormat(format) {
   const defaults = lib.settings.currency.format
 
   // Allow function as format parameter (should return string or object):
@@ -48,7 +48,7 @@ export function checkCurrencyFormat (format) {
     return {
       pos: format,
       neg: format.replace('-', '').replace('%v', '-%v'),
-      zero: format
+      zero: format,
     }
 
     // If no format, or object is missing valid positive value, use defaults:
@@ -56,12 +56,12 @@ export function checkCurrencyFormat (format) {
     // If defaults is a string, casts it to an object for faster checking next time:
     return !__isString(defaults)
       ? defaults
-      // @ts-ignore
-      : (lib.settings.currency.format = {
-        pos: defaults,
-        neg: defaults.replace('%v', '-%v'),
-        zero: defaults
-      })
+      : // @ts-ignore
+        (lib.settings.currency.format = {
+          pos: defaults,
+          neg: defaults.replace('%v', '-%v'),
+          zero: defaults,
+        })
   }
   // Otherwise, assume format was fine:
   return format
@@ -108,8 +108,7 @@ export const toFixed = function (value, precision) {
   precision = checkPrecision(precision, lib.settings.number.precision)
 
   const exponentialForm = Number(unformat(value) + 'e' + precision)
-  const rounded = Math.round(exponentialForm)
-  const finalResult = Number(rounded + 'e-' + precision).toFixed(precision)
+  const finalResult = Number(exponentialForm + 'e-' + precision).toFixed(precision)
   return finalResult
 }
 
@@ -120,13 +119,7 @@ export const toFixed = function (value, precision) {
  * Localise by overriding the precision and thousand / decimal separators
  * 2nd parameter `precision` can be an object matching `settings.number`
  */
-export const formatNumber = function (
-  number,
-  precision,
-  thousand,
-  decimal,
-  avoidEmptyDecimals
-) {
+export const formatNumber = function (number, precision, thousand, decimal, avoidEmptyDecimals) {
   // Resursively format arrays:
   if (__isArray(number)) {
     return __map(number, function (val) {
@@ -142,10 +135,10 @@ export const formatNumber = function (
     __isObject(precision)
       ? precision
       : {
-        precision: precision,
-        thousand: thousand,
-        decimal: decimal
-      },
+          precision: precision,
+          thousand: thousand,
+          decimal: decimal,
+        },
     lib.settings.number
   )
   // Clean up precision
@@ -189,15 +182,7 @@ export const formatNumber = function (
  *
  * To do: tidy up the parameters
  */
-export const formatMoney = function (
-  number,
-  symbol,
-  precision,
-  thousand,
-  decimal,
-  format,
-  avoidEmptyDecimals
-) {
+export const formatMoney = function (number, symbol, precision, thousand, decimal, format, avoidEmptyDecimals) {
   // Resursively format arrays:
   if (__isArray(number)) {
     return __map(number, function (val) {
@@ -213,20 +198,19 @@ export const formatMoney = function (
     __isObject(symbol)
       ? symbol
       : {
-        symbol: symbol,
-        precision: precision,
-        thousand: thousand,
-        decimal: decimal,
-        format: format,
-        avoidEmptyDecimals: avoidEmptyDecimals
-      },
+          symbol: symbol,
+          precision: precision,
+          thousand: thousand,
+          decimal: decimal,
+          format: format,
+          avoidEmptyDecimals: avoidEmptyDecimals,
+        },
     lib.settings.currency
   )
   // Check format (returns object with pos, neg and zero):
   const formats = checkCurrencyFormat(opts.format)
   // Choose which format to use for this value:
-  const useFormat =
-    number > 0 ? formats.pos : number < 0 ? formats.neg : formats.zero
+  const useFormat = number > 0 ? formats.pos : number < 0 ? formats.neg : formats.zero
 
   // Return with currency symbol added:
   return useFormat

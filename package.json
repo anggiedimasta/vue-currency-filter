@@ -45,13 +45,5 @@
   },
   "bugs": {
     "url": "https://github.com/mazipan/vue-currency-filter/issues"
-  },
-  "lint-staged": {
-    "*.{js,ts,vue}": "pnpm run lint"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
   }
 }

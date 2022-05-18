@@ -23,7 +23,7 @@ const lib = {
  * Check and normalise the value of precision (must be positive integer)
  */
 export function checkPrecision (val, base = 0) {
-  val = Math.round(Math.abs(val))
+  val = Math.abs(val)
   return isNaN(val) ? base : val
 }
 

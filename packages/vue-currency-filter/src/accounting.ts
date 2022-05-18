@@ -108,7 +108,8 @@ export const toFixed = function (value, precision) {
   precision = checkPrecision(precision, lib.settings.number.precision)
 
   const exponentialForm = Number(unformat(value) + 'e' + precision)
-  const finalResult = Number(exponentialForm + 'e-' + precision).toFixed(precision)
+
+  const finalResult = String(Math.floor(Number(exponentialForm + 'e-' + precision) * 100) / 100)
   return finalResult
 }
 

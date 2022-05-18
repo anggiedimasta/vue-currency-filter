@@ -1,38 +1,38 @@
 {
-	"name": "vue-currency-filter",
-	"description": "🍒 Lightweight vue currency filter based on accounting.js",
-	"version": "5.2.0",
-	"license": "MIT",
-	"author": "Irfan Maulana (https://github.com/mazipan/)",
-	"homepage": "https://mazipan.github.io/vue-currency-filter/",
-	"source": "src/index.ts",
-	"main": "dist/vue-currency-filter.js",
-	"module": "dist/vue-currency-filter.module.js",
-	"unpkg": "dist/vue-currency-filter.umd.js",
-	"typings": "dist/index.d.ts",
-	"scripts": {
-		"build": "microbundle src/index.ts --name VueCurrencyFilter",
-		"dev": "microbundle watch"
-	},
-	"files": [
-		"dist",
-		"nuxt"
-	],
-	"devDependencies": {
-		"microbundle": "^0.12.3",
-		"vue": "^2.6.12"
-	},
-	"keywords": [
-		"vue 2 currency",
-		"vue currency",
-		"vue currency filter",
-		"vue filter"
-	],
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/mazipan/vue-currency-filter.git"
-	},
-	"bugs": {
-		"url": "https://github.com/mazipan/vue-currency-filter/issues"
-	}
+  "name": "@anggiedimasta/vue-currency-filter",
+  "description": "Vue currency filter",
+  "version": "0.0.1",
+  "license": "MIT",
+  "author": "Anggie Dimasta (https://github.com/anggiedimasta/)",
+  "homepage": "https://github.com/anggiedimasta/vue-currency-filter",
+  "source": "src/index.ts",
+  "main": "dist/vue-currency-filter.js",
+  "module": "dist/vue-currency-filter.module.js",
+  "unpkg": "dist/vue-currency-filter.umd.js",
+  "typings": "dist/index.d.ts",
+  "scripts": {
+    "build": "microbundle src/index.ts --name VueCurrencyFilter",
+    "dev": "microbundle watch"
+  },
+  "files": [
+    "dist",
+    "nuxt"
+  ],
+  "devDependencies": {
+    "microbundle": "^0.12.4",
+    "vue": "^2.6.12"
+  },
+  "keywords": [
+    "vue 2 currency",
+    "vue currency",
+    "vue currency filter",
+    "vue filter"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/anggiedimasta/vue-currency-filter.git"
+  },
+  "bugs": {
+    "url": "https://github.com/anggiedimasta/vue-currency-filter/issues"
+  }
 }

@@ -107,7 +107,7 @@ export const unformat = function (value, decimal?) {
 export const toFixed = function (value, precision) {
   precision = checkPrecision(precision, lib.settings.number.precision)
 
-  const rounded = Number(value.toString().match(/^\d+(?:\.\d{0,2})?/))
+  const rounded = value ? Number(value.toString().match(/^\d+(?:\.\d{0,2})?/)) : ''
   const finalResult = String(rounded)
 
   return finalResult

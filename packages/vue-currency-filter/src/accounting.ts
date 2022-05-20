@@ -11,7 +11,7 @@ const lib = {
       grouping: 3, // digit grouping (not implemented yet)
     },
     number: {
-      precision: 0, // default precision on numbers is 0
+      precision: 2, // default precision on numbers is 0
       grouping: 3, // digit grouping (not implemented yet)
       thousand: ',',
       decimal: '.',
@@ -104,13 +104,12 @@ export const unformat = function (value, decimal?) {
  * Fixes binary rounding issues (eg. (0.615).toFixed(2) === "0.61") that present
  * problems for accounting- and finance-related software.
  */
-export const toFixed = function (value, precision) {
-  precision = checkPrecision(precision, lib.settings.number.precision)
-
-  const rounded = value ? Number(value.toString().match(/^\d+(?:\.\d{0,2})?/)) : ''
-  const finalResult = String(rounded)
-
-  return finalResult
+export const toFixed = function (value) {
+  return String(
+    unformat(value)
+      .toString()
+      .match(/^\d+(?:\.\d{0,2})?/)
+  )
 }
 
 /**
@@ -146,7 +145,7 @@ export const formatNumber = function (number, precision, thousand, decimal, avoi
   const usePrecision = checkPrecision(opts.precision)
   // Do some calc:
   const negative = number < 0 ? '-' : ''
-  const base = parseInt(toFixed(Math.abs(number || 0), usePrecision), 10) + ''
+  const base = parseInt(toFixed(Math.abs(number || 0)), 10) + ''
   const mod = base.length > 3 ? base.length % 3 : 0
 
   let precisionString = ''
@@ -154,11 +153,11 @@ export const formatNumber = function (number, precision, thousand, decimal, avoi
     // default behaviour
     // 1234.56 and avoidEmptyDecimals whatever   => 1234.56
     // 1234.00 and avoidEmptyDecimals undefined  => 1234.00
-    precisionString = opts.decimal + toFixed(Math.abs(number), usePrecision).split('.')[1]
+    precisionString = opts.decimal + toFixed(Math.abs(number)).split('.')[1]
 
     // 1234.00 and avoidEmptyDecimals == ''    => 1234
     // 1234.00 and avoidEmptyDecimals == '##'  => 1234.##
-    if (avoidEmptyDecimals !== undefined && parseInt(toFixed(Math.abs(number || 0), 1), 10) === number) {
+    if (avoidEmptyDecimals !== undefined && parseInt(toFixed(Math.abs(number || 0)), 10) === number) {
       precisionString = avoidEmptyDecimals === '' ? '' : opts.decimal + avoidEmptyDecimals
     }
   }
